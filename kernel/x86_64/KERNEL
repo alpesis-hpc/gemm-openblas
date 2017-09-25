@@ -1,0 +1,38 @@
+
+QGEMMKERNEL    =  qgemm_kernel_2x2.S
+QGEMMINCOPY    =
+QGEMMITCOPY    =
+QGEMMONCOPY    =  ../generic/gemm_ncopy_2.c
+QGEMMOTCOPY    =  ../generic/gemm_tcopy_2.c
+QGEMMINCOPYOBJ =
+QGEMMITCOPYOBJ =
+QGEMMONCOPYOBJ =  qgemm_oncopy$(TSUFFIX).$(SUFFIX)
+QGEMMOTCOPYOBJ =  qgemm_otcopy$(TSUFFIX).$(SUFFIX)
+
+XGEMMKERNEL    =  xgemm_kernel_1x1.S
+XGEMMINCOPY    =
+XGEMMITCOPY    =
+XGEMMONCOPY    =  ../generic/zgemm_ncopy_1.c
+XGEMMOTCOPY    =  ../generic/zgemm_tcopy_1.c
+XGEMMINCOPYOBJ =
+XGEMMITCOPYOBJ =
+XGEMMONCOPYOBJ =  xgemm_oncopy$(TSUFFIX).$(SUFFIX)
+XGEMMOTCOPYOBJ =  xgemm_otcopy$(TSUFFIX).$(SUFFIX)
+
+ifndef SGEMM_BETA
+SGEMM_BETA = gemm_beta.S
+endif
+ifndef DGEMM_BETA
+DGEMM_BETA = gemm_beta.S
+endif
+ifndef CGEMM_BETA
+CGEMM_BETA = zgemm_beta.S
+endif
+ifndef ZGEMM_BETA
+ZGEMM_BETA = zgemm_beta.S
+endif
+QGEMM_BETA = ../generic/gemm_beta.c
+XGEMM_BETA = ../generic/zgemm_beta.c
+
+
+XGEMM3MKERNEL    =  xgemm3m_kernel_2x2.S
