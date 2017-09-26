@@ -1,0 +1,9 @@
+*.o
+*.a
+*.so
+*.so.*
+
+# editor
+*.swo
+*.swp
+*.swn

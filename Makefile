@@ -16,12 +16,12 @@ RELA =
 
 LAPACK_NOOPT := $(filter-out -O0 -O1 -O2 -O3 -Ofast,$(LAPACK_FFLAGS))
 
-SUBDIRS_ALL = $(SUBDIRS) test ctest utest exports benchmark ../laswp ../bench
+SUBDIRS_ALL = $(SUBDIRS) exports benchmark ../laswp ../bench
 
-.PHONY : all libs netlib $(RELA) test ctest shared install
-.NOTPARALLEL : all libs $(RELA) prof lapack-test install blas-test
+.PHONY : all libs netlib $(RELA) shared install
+.NOTPARALLEL : all libs $(RELA) prof install blas-test
 
-all :: libs netlib $(RELA) tests shared
+all :: libs netlib $(RELA) shared
 	@echo
 	@echo " OpenBLAS build complete. ($(LIB_COMPONENTS))"
 	@echo
@@ -104,17 +104,6 @@ ifeq ($(OSNAME), CYGWIN_NT)
 endif
 endif
 
-tests :
-ifndef NOFORTRAN
-	touch $(LIBNAME)
-ifndef NO_FBLAS
-	$(MAKE) -C test all
-	$(MAKE) -C utest all
-endif
-ifndef NO_CBLAS
-	$(MAKE) -C ctest all
-endif
-endif
 
 libs :
 ifeq ($(CORE), UNKOWN)
@@ -156,7 +145,7 @@ ifdef USE_THREAD
 endif
 	@touch lib.grd
 
-prof : prof_blas prof_lapack
+prof : prof_blas 
 
 prof_blas :
 	ln -fs $(LIBNAME_P) $(LIBPREFIX)_p.$(LIBSUFFIX)
@@ -199,108 +188,8 @@ hpl_p :
 	fi; \
 	done
 
-ifeq ($(NO_LAPACK), 1)
-netlib :
-
-else
-netlib : lapack_prebuild
-ifndef NOFORTRAN
-	@$(MAKE) -C $(NETLIB_LAPACK_DIR) lapacklib
-	@$(MAKE) -C $(NETLIB_LAPACK_DIR) tmglib
-endif
-ifndef NO_LAPACKE
-	@$(MAKE) -C $(NETLIB_LAPACK_DIR) lapackelib
-endif
-endif
-
-ifeq ($(NO_LAPACK), 1)
-re_lapack :
-
-else
-re_lapack :
-	@$(MAKE) -C relapack
-endif
-
-prof_lapack : lapack_prebuild
-	@$(MAKE) -C $(NETLIB_LAPACK_DIR) lapack_prof
-
-lapack_prebuild :
-ifndef NOFORTRAN
-	-@echo "FORTRAN     = $(FC)" > $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "OPTS        = $(LAPACK_FFLAGS)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "POPTS       = $(LAPACK_FPFLAGS)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "NOOPT       = -O0 $(LAPACK_NOOPT)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "PNOOPT      = $(LAPACK_FPFLAGS) -O0" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "LOADOPTS    = $(FFLAGS) $(EXTRALIB)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "CC          = $(CC)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "override CFLAGS      = $(LAPACK_CFLAGS)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "ARCH        = $(AR)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "ARCHFLAGS   = $(ARFLAGS) -ru" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "RANLIB      = $(RANLIB)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "LAPACKLIB   = ../$(LIBNAME)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "TMGLIB      = ../$(LIBNAME)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "BLASLIB     = ../../../$(LIBNAME)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "LAPACKELIB  = ../$(LIBNAME)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "LAPACKLIB_P = ../$(LIBNAME_P)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "SUFFIX      = $(SUFFIX)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "PSUFFIX     = $(PSUFFIX)" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "CEXTRALIB   = $(EXTRALIB)" >> $(NETLIB_LAPACK_DIR)/make.inc
-ifeq ($(F_COMPILER), GFORTRAN)
-	-@echo "TIMER       = INT_ETIME" >> $(NETLIB_LAPACK_DIR)/make.inc
-ifdef SMP
-ifeq ($(OSNAME), WINNT)
-	-@echo "LOADER      = $(FC)" >> $(NETLIB_LAPACK_DIR)/make.inc
-else
-	-@echo "LOADER      = $(FC) -pthread" >> $(NETLIB_LAPACK_DIR)/make.inc
-endif
-else
-	-@echo "LOADER      = $(FC)" >> $(NETLIB_LAPACK_DIR)/make.inc
-endif
-else
-	-@echo "TIMER       = NONE" >> $(NETLIB_LAPACK_DIR)/make.inc
-	-@echo "LOADER      = $(FC)" >> $(NETLIB_LAPACK_DIR)/make.inc
-endif
-ifeq ($(BUILD_LAPACK_DEPRECATED), 1)
-	-@echo "BUILD_DEPRECATED      = 1" >> $(NETLIB_LAPACK_DIR)/make.inc
-endif
-	-@cat  make.inc >> $(NETLIB_LAPACK_DIR)/make.inc
-endif
-
-large.tgz :
-ifndef NOFORTRAN
-	if [ ! -a $< ]; then
-	-wget http://www.netlib.org/lapack/timing/large.tgz;
-	fi
-endif
-
-timing.tgz :
-ifndef NOFORTRAN
-	if [ ! -a $< ]; then
-	-wget http://www.netlib.org/lapack/timing/timing.tgz;
-	fi
-endif
-
-lapack-timing : large.tgz timing.tgz
-ifndef NOFORTRAN
-	(cd $(NETLIB_LAPACK_DIR); $(TAR) zxf ../timing.tgz TIMING)
-	(cd $(NETLIB_LAPACK_DIR)/TIMING; $(TAR) zxf ../../large.tgz )
-	$(MAKE) -C $(NETLIB_LAPACK_DIR)/TIMING
-endif
 
 
-lapack-test :
-	(cd $(NETLIB_LAPACK_DIR)/TESTING && rm -f x* *.out)
-	$(MAKE) -j 1 -C $(NETLIB_LAPACK_DIR)/TESTING xeigtstc  xeigtstd  xeigtsts  xeigtstz  xlintstc  xlintstd  xlintstds  xlintstrfd  xlintstrfz  xlintsts  xlintstz  xlintstzc xlintstrfs xlintstrfc
-ifneq ($(CROSS), 1)
-	( cd $(NETLIB_LAPACK_DIR)/INSTALL; ./testlsame; ./testslamch; ./testdlamch; \
-        ./testsecond; ./testdsecnd; ./testieee; ./testversion )
-	(cd $(NETLIB_LAPACK_DIR); ./lapack_testing.py -r )
-endif
-
-lapack-runtest:
-	( cd $(NETLIB_LAPACK_DIR)/INSTALL; ./testlsame; ./testslamch; ./testdlamch; \
-        ./testsecond; ./testdsecnd; ./testieee; ./testversion )
-	(cd $(NETLIB_LAPACK_DIR); ./lapack_testing.py -r )
 
 
 blas-test:
