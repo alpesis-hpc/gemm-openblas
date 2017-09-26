@@ -38,22 +38,3 @@ ZGEMMITCOPYOBJ =  zgemm_itcopy.$(SUFFIX)
 ZGEMMONCOPYOBJ =  zgemm_oncopy.$(SUFFIX)
 ZGEMMOTCOPYOBJ =  zgemm_otcopy.$(SUFFIX)
 
-STRSMKERNEL_LN	=  trsm_kernel_LN_2x8.S
-STRSMKERNEL_LT	=  trsm_kernel_LT_2x8.S
-STRSMKERNEL_RN	=  trsm_kernel_LT_2x8.S
-STRSMKERNEL_RT	=  trsm_kernel_RT_2x8.S
-
-DTRSMKERNEL_LN	=  trsm_kernel_LN_2x8.S
-DTRSMKERNEL_LT	=  trsm_kernel_LT_2x8.S
-DTRSMKERNEL_RN	=  trsm_kernel_LT_2x8.S
-DTRSMKERNEL_RT	=  trsm_kernel_RT_2x8.S
-
-CTRSMKERNEL_LN	= ztrsm_kernel_LT_1x4.S
-CTRSMKERNEL_LT	= ztrsm_kernel_LT_1x4.S
-CTRSMKERNEL_RN	= ztrsm_kernel_LT_1x4.S
-CTRSMKERNEL_RT	= ztrsm_kernel_RT_1x4.S
-
-ZTRSMKERNEL_LN	= ztrsm_kernel_LT_1x4.S
-ZTRSMKERNEL_LT	= ztrsm_kernel_LT_1x4.S
-ZTRSMKERNEL_RN	= ztrsm_kernel_LT_1x4.S
-ZTRSMKERNEL_RT	= ztrsm_kernel_RT_1x4.S
