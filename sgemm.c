@@ -1,15 +1,28 @@
 #include <cblas.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "timer.h"
+
+#define M 1200
+#define N 1200
+#define K 1200
 
 void main()
 {
-  int i=0;
-  float A[6] = {1.0,2.0,1.0,-3.0,4.0,-1.0};         
-  float B[6] = {1.0,2.0,1.0,-3.0,4.0,-1.0};  
-  float C[9] = {.5,.5,.5,.5,.5,.5,.5,.5,.5}; 
-  cblas_sgemm(CblasColMajor, CblasNoTrans, CblasTrans,3,3,2,1,A, 3, B, 3,2,C,3);
+  float * A = (float*)malloc(M*K*sizeof(float));
+  float * B = (float*)malloc(K*N*sizeof(float));
+  float * C = (float*)malloc(M*N*sizeof(float));
 
-  for(i=0; i<9; i++)
-    printf("%lf ", C[i]);
-  printf("\n");
+  int i;
+  for (i = 0; i < M*K; ++i) { A[i] = rand() % 20; }
+  for (i = 0; i < K*N; ++i) { B[i] = rand() % 20; }
+
+  double tic = timer();
+  cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans,M, N, K,1,A, K, B, N, 1,C,N);
+  printf("range %d %d %d, time elapsed: %f\n", M, N, K, timer() - tic);
+
+  free(A);
+  free(B);
+  free(C);
 }

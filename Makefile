@@ -1,5 +1,7 @@
+INC_DIR = inc
+
 CC = gcc
-CFLAGS = -I../blas/include
+CFLAGS = -I../blas/include -I$(INC_DIR)
 LDFLAGS = -L../blas/lib -lopenblas
 
 all:
