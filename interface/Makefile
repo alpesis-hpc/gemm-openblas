@@ -1,5 +1,5 @@
 TOPDIR	= ..
-include $(TOPDIR)/Makefile.system
+include $(TOPDIR)/makefiles/Makefile.system
 
 SUPPORT_GEMM3M = 0
 
@@ -122,7 +122,7 @@ endif
 
 FUNCALLFILES = $(FUNCOBJS:.$(SUFFIX)=)
 
-include $(TOPDIR)/Makefile.tail
+include $(TOPDIR)/makefiles/Makefile.tail
 
 all :: libs
 

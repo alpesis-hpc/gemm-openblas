@@ -3,7 +3,7 @@ TARGET = $(TARGET_CORE)
 endif
 
 TOPDIR	= ..
-include $(TOPDIR)/Makefile.system
+include $(TOPDIR)/makefiles/Makefile.system
 
 ifdef TARGET_CORE
 override CFLAGS += -DBUILD_KERNEL -DTABLE_NAME=gotoblas_$(TARGET_CORE)
@@ -69,4 +69,4 @@ clean ::
 
 #endif
 
-include $(TOPDIR)/Makefile.tail
+include $(TOPDIR)/makefiles/Makefile.tail

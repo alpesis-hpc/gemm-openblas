@@ -7,7 +7,7 @@ ifdef TARGET_CORE
 TARGET_MAKE = Makefile_kernel.conf
 TARGET_CONF = config_kernel.h
 else
-TARGET_MAKE = Makefile.conf
+TARGET_MAKE = makefiles/Makefile.conf
 TARGET_CONF = config.h
 endif
 

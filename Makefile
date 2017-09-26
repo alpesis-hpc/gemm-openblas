@@ -1,5 +1,5 @@
 TOPDIR	= .
-include ./Makefile.system
+include makefiles/Makefile.system
 
 BLASDIRS = interface driver/level2 driver/level3 driver/others
 
@@ -124,7 +124,7 @@ endif
 	fi; \
 	done
 #Save the config files for installation
-	@cp Makefile.conf Makefile.conf_last
+	@cp makefiles/Makefile.conf Makefile.conf_last
 	@cp config.h config_last.h
 ifdef QUAD_PRECISION
 	@echo "#define QUAD_PRECISION">> config_last.h
@@ -201,7 +201,7 @@ blas-test:
 dummy :
 
 install :
-	$(MAKE) -f Makefile.install install
+	$(MAKE) -f makefiles/Makefile.install install
 
 clean ::
 	@for d in $(SUBDIRS_ALL) ; \
@@ -216,6 +216,6 @@ clean ::
 ifeq ($(OSNAME), Darwin)
 	@rm -rf getarch.dSYM getarch_2nd.dSYM
 endif
-	@rm -f Makefile.conf config.h Makefile_kernel.conf config_kernel.h st* *.dylib
-	@rm -f *.grd Makefile.conf_last config_last.h
+	@rm -f makefiles/Makefile.conf config.h Makefile_kernel.conf config_kernel.h st* *.dylib
+	@rm -f *.grd makefiles/Makefile.conf_last config_last.h
 	@echo Done.

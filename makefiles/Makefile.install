@@ -1,7 +1,7 @@
 TOPDIR	= .
 export GOTOBLAS_MAKEFILE = 1
--include $(TOPDIR)/Makefile.conf_last
-include ./Makefile.system
+-include $(TOPDIR)/makefiles/Makefile.conf_last
+include ./makefiles/Makefile.system
 
 PREFIX ?= /opt/OpenBLAS
 

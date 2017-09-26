@@ -1,5 +1,5 @@
 TOPDIR	= ../..
-include ../../Makefile.system
+include ../../makefiles/Makefile.system
 
 USE_GEMM3M = 0
 
@@ -1460,4 +1460,4 @@ xgemm3m_thread_cc.$(PSUFFIX) : gemm3m.c level3_gemm3m_thread.c ../../param.h
 	$(CC) $(PFLAGS) $(BLOCKS) -c -DTHREADED_LEVEL3 -DXDOUBLE -DCOMPLEX -DCC $< -o $(@F)
 
 
-include ../../Makefile.tail
+include ../../makefiles/Makefile.tail

@@ -30,9 +30,9 @@ endif
 # Default Fortran compiler (FC) is selected by f_check.
 
 ifndef MAKEFILE_RULE
-include $(TOPDIR)/Makefile.rule
+include $(TOPDIR)/makefiles/Makefile.rule
 else
-include $(TOPDIR)/$(MAKEFILE_RULE)
+include $(TOPDIR)/makefiles/$(MAKEFILE_RULE)
 endif
 
 #
@@ -165,12 +165,12 @@ ifndef GOTOBLAS_MAKEFILE
 export GOTOBLAS_MAKEFILE = 1
 
 # Generating Makefile.conf and config.h
-DUMMY := $(shell $(MAKE) -C $(TOPDIR) -f Makefile.prebuild CC="$(CC)" FC="$(FC)" HOSTCC="$(HOSTCC)" CFLAGS="$(GETARCH_FLAGS)" BINARY=$(BINARY) USE_OPENMP=$(USE_OPENMP) TARGET_CORE=$(TARGET_CORE) ONLY_CBLAS=$(ONLY_CBLAS) TARGET=$(TARGET) all)
+DUMMY := $(shell $(MAKE) -C $(TOPDIR) -f makefiles/Makefile.prebuild CC="$(CC)" FC="$(FC)" HOSTCC="$(HOSTCC)" CFLAGS="$(GETARCH_FLAGS)" BINARY=$(BINARY) USE_OPENMP=$(USE_OPENMP) TARGET_CORE=$(TARGET_CORE) ONLY_CBLAS=$(ONLY_CBLAS) TARGET=$(TARGET) all)
 
 ifndef TARGET_CORE
-include $(TOPDIR)/Makefile.conf
+include $(TOPDIR)/makefiles/Makefile.conf
 else
-include $(TOPDIR)/Makefile_kernel.conf
+include $(TOPDIR)/makefiles/Makefile_kernel.conf
 endif
 
 endif
@@ -976,7 +976,7 @@ endif
 
 KERNELDIR	= $(TOPDIR)/kernel/$(ARCH)
 
-include $(TOPDIR)/Makefile.$(ARCH)
+include $(TOPDIR)/makefiles/Makefile.$(ARCH)
 
 CCOMMON_OPT	+= -DASMNAME=$(FU)$(*F) -DASMFNAME=$(FU)$(*F)$(BU) -DNAME=$(*F)$(BU) -DCNAME=$(*F) -DCHAR_NAME=\"$(*F)$(BU)\" -DCHAR_CNAME=\"$(*F)\"
 

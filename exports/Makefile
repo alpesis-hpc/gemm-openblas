@@ -1,6 +1,6 @@
 TOPDIR	= ..
 
-include ../Makefile.system
+include ../makefiles/Makefile.system
 
 ifndef EXPRECISION
 EXPRECISION	= 0
@@ -211,28 +211,28 @@ static : ../$(LIBNAME)
 	$(AR) -cq ../$(LIBNAME) goto.$(SUFFIX)
 	rm -f goto.$(SUFFIX)
 
-osx.def : gensymbol ../Makefile.system ../getarch.c
+osx.def : gensymbol ../makefiles/Makefile.system ../getarch.c
 	perl ./gensymbol osx $(ARCH) $(BU) $(EXPRECISION) $(NO_CBLAS)  $(NO_LAPACK) $(NO_LAPACKE) $(NEED2UNDERSCORES) $(ONLY_CBLAS) "$(SYMBOLPREFIX)" "$(SYMBOLSUFFIX)" $(BUILD_LAPACK_DEPRECATED) > $(@F)
 
-aix.def : gensymbol ../Makefile.system ../getarch.c
+aix.def : gensymbol ../makefiles/Makefile.system ../getarch.c
 	perl ./gensymbol aix $(ARCH) $(BU) $(EXPRECISION) $(NO_CBLAS)  $(NO_LAPACK) $(NO_LAPACKE) $(NEED2UNDERSCORES) $(ONLY_CBLAS) "$(SYMBOLPREFIX)" "$(SYMBOLSUFFIX)" $(BUILD_LAPACK_DEPRECATED) > $(@F)
 
-objcopy.def : gensymbol ../Makefile.system ../getarch.c
+objcopy.def : gensymbol ../makefiles/Makefile.system ../getarch.c
 	perl ./gensymbol objcopy $(ARCH) $(BU) $(EXPRECISION) $(NO_CBLAS)  $(NO_LAPACK) $(NO_LAPACKE) $(NEED2UNDERSCORES) $(ONLY_CBLAS) "$(SYMBOLPREFIX)" "$(SYMBOLSUFFIX)" $(BUILD_LAPACK_DEPRECATED) > $(@F)
 
-objconv.def : gensymbol ../Makefile.system ../getarch.c
+objconv.def : gensymbol ../makefiles/Makefile.system ../getarch.c
 	perl ./gensymbol objconv $(ARCH) $(BU) $(EXPRECISION) $(NO_CBLAS)  $(NO_LAPACK) $(NO_LAPACKE) $(NEED2UNDERSCORES) $(ONLY_CBLAS) "$(SYMBOLPREFIX)" "$(SYMBOLSUFFIX)" $(BUILD_LAPACK_DEPRECATED) > $(@F)
 
 test : linktest.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -w -o linktest linktest.c ../$(LIBSONAME) -lm && echo OK.
 	rm -f linktest
 
-linktest.c : gensymbol ../Makefile.system ../getarch.c
+linktest.c : gensymbol ../makefiles/Makefile.system ../getarch.c
 	perl ./gensymbol linktest  $(ARCH) $(BU) $(EXPRECISION) $(NO_CBLAS) $(NO_LAPACK) $(NO_LAPACKE) $(NEED2UNDERSCORES) $(ONLY_CBLAS) "$(SYMBOLPREFIX)" "$(SYMBOLSUFFIX)" $(BUILD_LAPACK_DEPRECATED) > linktest.c
 
 clean ::
 	@rm -f *.def *.dylib __.SYMDEF* *.renamed
 
-include ../Makefile.tail
+include ../makefiles/Makefile.tail
 
 

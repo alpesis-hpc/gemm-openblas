@@ -6,7 +6,7 @@ UTESTBIN=openblas_utest
 .PHONY : all
 .NOTPARALLEL : all run_test $(UTESTBIN)
 
-include $(TOPDIR)/Makefile.system
+include $(TOPDIR)/makefiles/Makefile.system
 
 OBJS=utest_main.o 
 #test_rot.o test_swap.o test_axpy.o test_dotu.o test_rotmg.o test_dsdot.o test_fork.o

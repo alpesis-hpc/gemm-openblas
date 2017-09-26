@@ -1,5 +1,5 @@
 TOPDIR	= ..
-include $(TOPDIR)/Makefile.system
+include $(TOPDIR)/makefiles/Makefile.system
 
 # ACML standard
 #ACML=/opt/acml5.3.1/gfortran64_mp/lib
@@ -201,5 +201,5 @@ smallscaling: smallscaling.c ../$(LIBNAME)
 clean ::
 	@rm -f *.goto *.mkl *.acml *.atlas *.veclib *.essl smallscaling
 
-include $(TOPDIR)/Makefile.tail
+include $(TOPDIR)/makefiles/Makefile.tail
 
