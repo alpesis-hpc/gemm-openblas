@@ -1,18 +1,14 @@
 TOPDIR	= .
 include makefiles/Makefile.system
 
-BLASDIRS = interface driver/level2 driver/level3 driver/others
+BLASDIRS = interface driver/level3 driver/others
 
 ifneq ($(DYNAMIC_ARCH), 1)
 BLASDIRS += kernel
 endif
 
-ifdef SANITY_CHECK
-BLASDIRS += reference
-endif
 
 SUBDIRS	= $(BLASDIRS)
-RELA =
 
 LAPACK_NOOPT := $(filter-out -O0 -O1 -O2 -O3 -Ofast,$(LAPACK_FFLAGS))
 
