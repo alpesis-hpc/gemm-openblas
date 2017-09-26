@@ -1,22 +1,3 @@
-SAMAXKERNEL	=  amax_cell.S
-DAMAXKERNEL	=  amax_cell.S
-CAMAXKERNEL	= zamax_cell.S
-ZAMAXKERNEL	= zamax_cell.S
-
-SAMINKERNEL	=  amin_cell.S
-DAMINKERNEL	=  amin_cell.S
-CAMINKERNEL	= zamin_cell.S
-ZAMINKERNEL	= zamin_cell.S
-
-SASUMKERNEL	=  asum_cell.S
-DASUMKERNEL	=  asum_cell.S
-CASUMKERNEL	= zasum_cell.S
-ZASUMKERNEL	= zasum_cell.S
-
-SDOTKERNEL	=  dot_cell.S
-DDOTKERNEL	=  dot_cell.S
-CDOTKERNEL	= zdot_cell.S
-ZDOTKERNEL	= zdot_cell.S
 
 SGEMMKERNEL    =  gemm_kernel_altivec_cell.S
 SGEMMINCOPY    =  ../generic/gemm_ncopy_16.c
@@ -55,22 +36,3 @@ ZGEMMITCOPYOBJ =
 ZGEMMONCOPYOBJ =  zgemm_oncopy$(TSUFFIX).$(SUFFIX)
 ZGEMMOTCOPYOBJ =  zgemm_otcopy$(TSUFFIX).$(SUFFIX)
 
-#STRSMKERNEL_LN	=  trsm_kernel_LN.S
-#STRSMKERNEL_LT	=  trsm_kernel_LT.S
-#STRSMKERNEL_RN	=  trsm_kernel_LT.S
-#STRSMKERNEL_RT	=  trsm_kernel_RT.S
-
-DTRSMKERNEL_LN	=  trsm_kernel_cell_LN.S
-DTRSMKERNEL_LT	=  trsm_kernel_cell_LT.S
-DTRSMKERNEL_RN	=  trsm_kernel_cell_LT.S
-DTRSMKERNEL_RT	=  trsm_kernel_cell_RT.S
-
-#CTRSMKERNEL_LN	=  ztrsm_kernel_LN.S
-#CTRSMKERNEL_LT	=  ztrsm_kernel_LT.S
-#CTRSMKERNEL_RN	=  ztrsm_kernel_LT.S
-#CTRSMKERNEL_RT	=  ztrsm_kernel_RT.S
-
-ZTRSMKERNEL_LN	=  ztrsm_kernel_cell_LN.S
-ZTRSMKERNEL_LT	=  ztrsm_kernel_cell_LT.S
-ZTRSMKERNEL_RN	=  ztrsm_kernel_cell_LT.S
-ZTRSMKERNEL_RT	=  ztrsm_kernel_cell_RT.S
