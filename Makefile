@@ -2,7 +2,7 @@ INC_DIR = inc
 
 CC = gcc
 CFLAGS = -I../blas/include -I$(INC_DIR)
-LDFLAGS = -L../blas/lib -lopenblas
+LDFLAGS = -L../blas/lib -lgemm
 
 all:
 	$(CC) $(CFLAGS) sgemm.c -o _build/sgemm $(LDFLAGS)
